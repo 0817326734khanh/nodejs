@@ -1,21 +1,18 @@
 const express = require('express');
-const path = require('path');
-const indexRouter = require('./routes/index');
-
+const cors = require('cors');
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-// Use the router for handling routes
-app.use('/', indexRouter);
+// API cơ bản
+app.get('/api', (req, res) => {
+  res.json({ message: 'Hello from server!' });
+});
 
-// Catch-all route for handling 404 errors
-app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-  });
-
+// Lắng nghe trên cổng
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
